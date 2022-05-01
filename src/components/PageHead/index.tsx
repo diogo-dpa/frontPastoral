@@ -8,7 +8,7 @@ const PageHead = ({ title }: PageHeadProps) => {
   return (
     <Head>
       <title>{title}</title>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/iconePastoral.ico" />
     </Head>
   );
 };
