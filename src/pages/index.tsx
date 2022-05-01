@@ -3,18 +3,25 @@ import {
   Box,
   Button,
   CircularProgress,
-  TextField,
+  IconButton,
   Typography
 } from '@mui/material';
 import { styled } from '@mui/system';
 import PageWrapper from '@components/PageWrapper';
 import PageHead from '@components/PageHead';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '@utility/validations/loginValidation';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import firebaseClient from '@services/firebase/firebaseClient';
+import { GetServerSidePropsContext } from 'next';
+import nookies from 'nookies';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
+import ControlledInput from '@components/ControlledInput';
 
 interface LoginFormProps {
   email: string;
@@ -23,6 +30,7 @@ interface LoginFormProps {
 
 const LoginPage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { control, handleSubmit, formState, reset } = useForm<LoginFormProps>({
     defaultValues: {
@@ -39,7 +47,7 @@ const LoginPage = () => {
     try {
       console.log('entrou');
       setLoadingSubmit(true);
-      // await firebaseClient.auth().signInWithEmailAndPassword(email, password);
+      await firebaseClient.auth().signInWithEmailAndPassword(email, password);
       reset();
       router.push('/proximaPagina');
     } catch (err) {
@@ -54,6 +62,16 @@ const LoginPage = () => {
     }
   };
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   return (
     <PageWrapper>
       <>
@@ -65,31 +83,44 @@ const LoginPage = () => {
             </Typography>
 
             <InputBox as="form" onSubmit={handleSubmit(handleSubmitForm)}>
-              <Controller
+              <ControlledInput
                 name="email"
+                variant="outlined"
                 control={control}
-                render={({ field }) => (
-                  <TextField
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                    {...field}
-                    type="email"
-                    placeholder="E-mail"
-                  />
-                )}
+                hasLeftElement
+                LeftElementComponent={<AlternateEmailIcon fontSize="small" />}
+                error={!!errors.email}
+                errorMessage={errors.email?.message}
+                placeholder="E-mail"
+                type="email"
+                noValidate
               />
-              <Controller
+              <ControlledInput
                 name="password"
+                variant="outlined"
                 control={control}
-                render={({ field }) => (
-                  <TextField
-                    error={!!errors.password}
-                    helperText={errors.password?.message ?? ''}
-                    {...field}
-                    type={'password'}
-                    placeholder="Senha"
-                  />
-                )}
+                hasLeftElement
+                LeftElementComponent={
+                  <EnhancedEncryptionIcon fontSize="small" />
+                }
+                hasRightElement
+                RightElementComponent={
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? (
+                      <VisibilityOff fontSize="small" />
+                    ) : (
+                      <Visibility fontSize="small" />
+                    )}
+                  </IconButton>
+                }
+                error={!!errors.password}
+                errorMessage={errors.password?.message}
+                placeholder="E-mail"
+                type={showPassword ? 'text' : 'password'}
               />
               <CustomButtom variant="contained" type="submit">
                 {loadingSubmit ? <CircularProgress size="20px" /> : 'Entrar'}
@@ -114,6 +145,30 @@ const LoginPage = () => {
       </>
     </PageWrapper>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    // const cookies = nookies.get(ctx);
+    // const token = cookies.token;
+
+    // if (token) {
+    //     throw new Error("Usuário já autenticado");
+    // }
+
+    return {
+      props: {}
+    };
+  } catch (err) {
+    // Está logado
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/paginaAutenticada'
+      },
+      props: {}
+    };
+  }
 };
 
 const LoginPageContent = styled(Box)({
@@ -149,6 +204,13 @@ const InputBox = styled(Box)({
   justifyContent: 'space-evenly',
   '.MuiButton-root': {
     marginTop: '16px'
+  },
+  '.MuiTextField-root': {
+    width: '100%',
+    input: {
+      padding: '12px 0px',
+      fontSize: '18px'
+    }
   }
 });
 
