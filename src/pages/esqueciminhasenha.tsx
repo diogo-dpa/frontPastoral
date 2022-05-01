@@ -7,6 +7,7 @@ import PageWrapper from '@components/PageWrapper';
 // import nookies from 'nookies';
 // import { schema } from '@utility/validations/passwordRecoverValidation';
 import { useState } from 'react';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
@@ -18,6 +19,7 @@ import {
 import { styled } from '@mui/system';
 import { toast } from 'react-toastify';
 import { schema } from '@utility/validations/passwordRecoveryValidation';
+import ControlledInput from '@components/ControlledInput';
 
 interface RecoverPasswordFormProps {
   email: string;
@@ -84,19 +86,19 @@ export default function EsqueciMinhaSenha() {
                       Informe o e-mail cadastrado para que a senha seja
                       resetada.
                     </DescriptionText>
-                    <Controller
+                    <ControlledInput
                       name="email"
+                      variant="outlined"
                       control={control}
-                      render={({ field }) => (
-                        <TextField
-                          fullWidth
-                          error={!!errors.email}
-                          helperText={errors.email?.message}
-                          {...field}
-                          type="email"
-                          placeholder="E-mail"
-                        />
-                      )}
+                      hasLeftElement
+                      LeftElementComponent={
+                        <AlternateEmailIcon fontSize="small" />
+                      }
+                      error={!!errors.email}
+                      errorMessage={errors.email?.message}
+                      placeholder="E-mail"
+                      type="email"
+                      noValidate
                     />
                   </InputContent>
 
@@ -193,11 +195,19 @@ const InputContent = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginBottom: '16px'
+  marginBottom: '16px',
+  '.MuiTextField-root': {
+    width: '100%',
+    input: {
+      padding: '12px 0px',
+      fontSize: '18px'
+    }
+  }
 });
 
 const ButtonContent = styled(Button)({
   width: '90%',
+  color: 'white',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

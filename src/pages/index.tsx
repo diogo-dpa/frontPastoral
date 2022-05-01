@@ -47,7 +47,7 @@ const LoginPage = () => {
     try {
       console.log('entrou');
       setLoadingSubmit(true);
-      await firebaseClient.auth().signInWithEmailAndPassword(email, password);
+      // await firebaseClient.auth().signInWithEmailAndPassword(email, password);
       reset();
       router.push('/proximaPagina');
     } catch (err) {
@@ -119,7 +119,7 @@ const LoginPage = () => {
                 }
                 error={!!errors.password}
                 errorMessage={errors.password?.message}
-                placeholder="E-mail"
+                placeholder="Senha"
                 type={showPassword ? 'text' : 'password'}
               />
               <CustomButtom variant="contained" type="submit">
