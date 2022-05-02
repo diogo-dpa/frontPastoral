@@ -6,6 +6,7 @@ import createEmotionCache from '../utility/createEmotionCache';
 import theme from '../styles/theme/theme';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthProvider } from '@contexts/userContext';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -20,18 +21,20 @@ const MyApp: FC<MyAppProps> = ({
 }) => {
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-        />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+          />
+        </ThemeProvider>
+      </AuthProvider>
     </CacheProvider>
   );
 };
