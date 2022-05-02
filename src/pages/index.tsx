@@ -16,12 +16,14 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import firebaseClient from '@services/firebase/firebaseClient';
+import firebase from '@services/firebase/firebaseClient';
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
 import ControlledInput from '@components/ControlledInput';
+import { getUserDataMe, postUserAuth } from '@services/strapi';
+import { useAuth } from '@contexts/userContext';
 
 interface LoginFormProps {
   email: string;
@@ -31,6 +33,7 @@ interface LoginFormProps {
 const LoginPage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { setAllUserData } = useAuth();
 
   const { control, handleSubmit, formState, reset } = useForm<LoginFormProps>({
     defaultValues: {
@@ -45,11 +48,22 @@ const LoginPage = () => {
 
   const handleSubmitForm = async ({ email, password }: LoginFormProps) => {
     try {
-      console.log('entrou');
       setLoadingSubmit(true);
-      // await firebaseClient.auth().signInWithEmailAndPassword(email, password);
+
+      // Loga no firebase
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+
+      // Buscar jwt no strapi
+      const {
+        data: { jwt: token_jwt }
+      } = await postUserAuth(email, password);
+      // seta cookies do token strapi
+      nookies.set(null, 'token_strapi', token_jwt);
+      const userData = await getUserDataMe(token_jwt);
+      setAllUserData(userData);
+
       reset();
-      router.push('/proximaPagina');
+      router.push('/paginaAutenticada');
     } catch (err) {
       toast.error('Falha no login. Tente novamente.', {
         position: 'top-right',
@@ -149,18 +163,19 @@ const LoginPage = () => {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
-    // const cookies = nookies.get(ctx);
-    // const token = cookies.token;
+    const cookies = nookies.get(ctx);
+    const token = cookies.token;
 
-    // if (token) {
-    //     throw new Error("Usuário já autenticado");
-    // }
+    if (token) {
+      throw new Error('Usuário já autenticado');
+    }
 
     return {
       props: {}
     };
   } catch (err) {
     // Está logado
+    console.warn('err.message', err.message);
     return {
       redirect: {
         permanent: false,

@@ -1,22 +1,15 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import PageHead from '@components/PageHead';
 import PageWrapper from '@components/PageWrapper';
-// import firebaseClient from '@services/firebase/firebaseClient';
-// import nookies from 'nookies';
-// import { schema } from '@utility/validations/passwordRecoverValidation';
 import { useState } from 'react';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import firebase from '@services/firebase/firebaseClient';
 import { styled } from '@mui/system';
+import nookies from 'nookies';
 import { toast } from 'react-toastify';
 import { schema } from '@utility/validations/passwordRecoveryValidation';
 import ControlledInput from '@components/ControlledInput';
@@ -42,7 +35,7 @@ export default function EsqueciMinhaSenha() {
     console.log('email', email);
     try {
       setLoadingSubmit(true);
-      // await firebaseClient.auth().sendPasswordResetEmail(email);
+      await firebase.auth().sendPasswordResetEmail(email);
       setEmailSent(true);
       setEmailToRecover(email);
       reset();
@@ -124,12 +117,12 @@ export default function EsqueciMinhaSenha() {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
-    // const cookies = nookies.get(ctx);
-    // const token = cookies.token;
+    const cookies = nookies.get(ctx);
+    const token = cookies.token;
 
-    // if (token) {
-    //   throw new Error('Usuário já autenticado');
-    // }
+    if (token) {
+      throw new Error('Usuário já autenticado');
+    }
 
     return {
       props: {}
@@ -180,7 +173,6 @@ const FormContent = styled(Box)({
 const DescriptionText = styled(Typography)({
   textAlign: 'center',
   fontSize: '14px',
-  cursor: 'pointer',
   color: '#3a3939',
   marginBottom: '16px'
 });
