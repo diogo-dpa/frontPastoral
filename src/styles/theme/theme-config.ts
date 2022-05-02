@@ -12,7 +12,7 @@ import {
 import { Components } from '@mui/material/styles/components';
 import { PaletteOptions } from '@mui/material';
 
-export const FONT_FAMILY = 'Raleway';
+export const FONT_FAMILY = 'Roboto';
 
 const SPACING = 8;
 
