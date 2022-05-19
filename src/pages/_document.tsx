@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
           <meta name="googlebot" content="notranslate" />
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
           <meta charSet="utf-8" />
 
           <link
