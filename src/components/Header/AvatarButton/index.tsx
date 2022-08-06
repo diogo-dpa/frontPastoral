@@ -9,7 +9,7 @@ interface AvatarButtonProps {
 
 const AvatarButton = ({ handleClick, username }: AvatarButtonProps) => {
   return (
-    <Tooltip title={username ?? ''}>
+    <Tooltip title="Clique para abrir">
       <IconButton
         onClick={handleClick}
         size="small"
