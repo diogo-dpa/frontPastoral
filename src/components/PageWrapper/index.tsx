@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
-import { Box, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-// import Header from '@components/Header';
+import { Box } from '@mui/material';
+import Header from '@components/Header';
 
 interface PageWrapperProps {
   children: ReactElement;
@@ -10,25 +9,28 @@ interface PageWrapperProps {
 
 const PageWrapper = ({ children, authenticatedPage }: PageWrapperProps) => {
   return (
-    <MainContainer>
-      {/* {authenticatedPage && <Header />} */}
-      <PageContent>{children}</PageContent>
-    </MainContainer>
+    <Box
+      sx={{
+        width: '100vw',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      {authenticatedPage && <Header />}
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   );
 };
-
-const MainContainer = styled(Box)({
-  width: '100vw',
-  minHeight: '100vh',
-  display: 'flex',
-  flex: 1
-});
-
-const PageContent = styled(Box)({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-});
 
 export default PageWrapper;

@@ -1,22 +1,20 @@
+import React from 'react';
+import nookies from 'nookies';
 import PageWrapper from '@components/PageWrapper';
-import { useAuth } from '@contexts/userContext';
 import { isAuthenticated } from '@services/firebase/authentication';
 import { GetServerSidePropsContext } from 'next';
-import nookies from 'nookies';
+import PageHead from '@components/PageHead';
 
-const PaginaAutenticada = () => {
-  const { SignOut, allUserData } = useAuth();
-
-  const handleSignOut = () => {
-    SignOut();
-  };
-
+const UsersPage = () => {
   return (
     <PageWrapper authenticatedPage>
       <>
-        <h1>Página Autenticada, {allUserData?.username}</h1>
-        {allUserData?.custom_role == 'admin' && <h2>Bem vindo, admin</h2>}
-        <button onClick={handleSignOut}>SignOut</button>
+        <PageHead title="Usuários | Pastoral" />
+        <h1>Usuários</h1>
+        <section>
+          <span>Filtrar por</span>
+          <div></div>
+        </section>
       </>
     </PageWrapper>
   );
@@ -50,4 +48,4 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 };
 
-export default PaginaAutenticada;
+export default UsersPage;
