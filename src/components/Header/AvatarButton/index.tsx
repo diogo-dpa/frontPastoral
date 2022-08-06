@@ -5,9 +5,10 @@ import { formatUsernameFromUserData } from '../headerUtils';
 interface AvatarButtonProps {
   username: string | null;
   handleClick: (e: React.MouseEvent<HTMLElement>) => void;
+  open: boolean;
 }
 
-const AvatarButton = ({ handleClick, username }: AvatarButtonProps) => {
+const AvatarButton = ({ handleClick, username, open }: AvatarButtonProps) => {
   return (
     <Tooltip title="Clique para abrir">
       <IconButton
@@ -24,7 +25,7 @@ const AvatarButton = ({ handleClick, username }: AvatarButtonProps) => {
           ml: 2
         }}
       >
-        <Avatar sx={{ width: 40, height: 40 }}>
+        <Avatar sx={{ width: 40, height: 40, bgcolor: '#fff' }}>
           {formatUsernameFromUserData(username)}
         </Avatar>
       </IconButton>

@@ -65,6 +65,7 @@ const Header = () => {
         <AvatarButton
           username={allUserData?.username}
           handleClick={handleClick}
+          open={open}
         />
       </Box>
       <SuspenseMenu
