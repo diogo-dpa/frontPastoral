@@ -14,9 +14,9 @@ export const headerOptions: OptionsType[] = [
     urlLink: '/atendimentos'
   },
   {
-    label: 'Usuários',
+    label: 'Pessoas',
     icon: GroupIcon,
-    urlLink: '/usuarios'
+    urlLink: '/pessoas'
   }
 ];
 

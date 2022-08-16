@@ -11,7 +11,6 @@ const PageWrapper = ({ children, authenticatedPage }: PageWrapperProps) => {
   return (
     <Box
       sx={{
-        width: '100vw',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column'
@@ -22,9 +21,11 @@ const PageWrapper = ({ children, authenticatedPage }: PageWrapperProps) => {
         sx={{
           width: '100%',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
           alignItems: 'center',
-          flex: 1
+          flex: 1,
+          padding: '32px 0px 56px 0px'
         }}
       >
         {children}

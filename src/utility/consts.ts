@@ -1,0 +1,11 @@
+export const MAX_INPUT_DIGITS = 50;
+export const MAX_INPUT_INTERMEDIATE_DIGITS = 25;
+export const MAX_INPUT_FEW_DIGITS = 10;
+export const MINOR_AGE = 18;
+export const MAJOR_AGE = 100;
+export const CPF_DOCUMENT_DIGITS = 11;
+export const CNH_DOCUMENT_DIGITS = 11;
+export const RG_DOCUMENT_DIGITS = 7;
+export const RG_DOCUMENT_DIGITS_MAX = 14;
+export const BIRTH_DATE_DIGITS = 8;
+export const CELLPHONE_DIGITS = 11;

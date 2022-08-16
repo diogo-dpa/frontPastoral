@@ -1,8 +1,15 @@
 import {
+  FormControl,
+  FormHelperText,
   InputAdornment,
-  OutlinedTextFieldProps,
-  TextField
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectProps,
+  TextField,
+  TextFieldProps
 } from '@mui/material';
+import { SelectInputOptions } from '@utility/interfaces';
 import React, { HTMLProps, InputHTMLAttributes, ReactElement } from 'react';
 import { Controller } from 'react-hook-form';
 
@@ -17,9 +24,14 @@ type ControlledInputCustomProps = {
   errorMessage?: string;
   bg?: string;
   maxWidth?: number | string;
+  isSelectInput?: boolean;
+  selectLabel?: string;
+  selectInputOptions?: SelectInputOptions[];
+  textarea?: boolean;
 } & HTMLProps<HTMLInputElement> &
   HTMLProps<HTMLSelectElement> &
-  OutlinedTextFieldProps;
+  SelectProps &
+  TextFieldProps;
 
 type ControlledInputProps = ControlledInputCustomProps &
   InputHTMLAttributes<HTMLInputElement>;
@@ -35,8 +47,68 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
   errorMessage,
   bg = 'palette.white',
   maxWidth = '100%',
+  textarea = false,
+  isSelectInput = false,
+  selectLabel = 'Selecione',
+  selectInputOptions = [],
   ...rest
 }) => {
+  if (isSelectInput) {
+    return (
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <FormControl
+            sx={{
+              maxWidth,
+              width: ['300px', '350px'],
+              fontSize: '18px'
+            }}
+          >
+            <InputLabel>{selectLabel}</InputLabel>
+            <Select
+              {...rest}
+              {...field}
+              sx={{
+                cursor: 'pointer',
+                border: 'none',
+                borderBottom: error ? '1.5px solid red' : '',
+                '& input::placeholder': {
+                  fontSize: '16px',
+                  color: 'rgba(0, 0, 0, 0.371)'
+                }
+              }}
+              ref={field.ref}
+            >
+              {selectInputOptions.map(option => (
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                  sx={{
+                    fontSize: '18px'
+                  }}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+            {error && (
+              <FormHelperText
+                sx={{
+                  fontSize: '12px',
+                  color: 'red'
+                }}
+              >
+                {errorMessage}
+              </FormHelperText>
+            )}
+          </FormControl>
+        )}
+      />
+    );
+  }
+
   return (
     <Controller
       name={name}
@@ -47,6 +119,15 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
           helperText={errorMessage}
           {...field}
           {...rest}
+          sx={{
+            maxWidth,
+            width: '100%',
+            '& input::placeholder, & textarea::placeholder, & input': {
+              fontSize: '18px'
+            }
+          }}
+          multiline={textarea}
+          rows={textarea ? 4 : 1}
           InputProps={{
             startAdornment: hasLeftElement && (
               <InputAdornment position="start">
