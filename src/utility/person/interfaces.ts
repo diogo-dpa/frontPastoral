@@ -22,6 +22,8 @@ export interface PersonData {
   ctps: string;
   hasHealthProblem: 'sim' | 'nao' | '';
   isCareSituation: 'sim' | 'nao' | '';
+  isDisabledPerson: 'sim' | 'nao' | '';
+  disabledDescription?: string;
   healthDescription?: string;
   referenceServices?: string;
   schoolLevel: string;

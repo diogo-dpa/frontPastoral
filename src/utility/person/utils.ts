@@ -186,6 +186,26 @@ export const personInputsFields: InputFormType[] = [
   {
     section: [
       {
+        name: 'isDisabledPerson',
+        error: 'isDisabledPerson',
+        errorMessage: 'isDisabledPerson',
+        placeholder: 'Portador de Deficiência?',
+        selectOptions: yesOrNoOptions,
+        selectLabel: 'Portador de Deficiência?',
+        isRequired: true
+      },
+      {
+        name: 'disabledDescription',
+        error: 'disabledDescription',
+        errorMessage: 'disabledDescription',
+        placeholder: 'Descrição da deficiência',
+        textarea: true
+      }
+    ]
+  },
+  {
+    section: [
+      {
         name: 'referenceServices',
         error: 'referenceServices',
         errorMessage: 'referenceServices',
@@ -270,8 +290,8 @@ export function formatPersonData(personData: PersonData) {
     problemaDeSaude: personData.hasHealthProblem === 'sim' ? true : false,
     situacaoDeRua: personData.isCareSituation === 'sim' ? true : false,
     descricaoSaude: personData.healthDescription,
-    portadorDeficiencia: false,
-    descricaoDeficiencia: personData.healthDescription,
+    portadorDeficiencia: personData.isDisabledPerson === 'sim' ? true : false,
+    descricaoDeficiencia: personData.disabledDescription,
     servicosDeReferencia: personData.referenceServices,
     grauEscolar: personData.schoolLevel,
     aperfeicoamentoHabilidades: personData.skills,

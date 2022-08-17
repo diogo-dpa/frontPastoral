@@ -37,6 +37,8 @@ const CadastroPessoas = () => {
       ctps: '',
       hasHealthProblem: '',
       isCareSituation: '',
+      isDisabledPerson: '',
+      disabledDescription: '',
       healthDescription: '',
       referenceServices: '',
       schoolLevel: '',
