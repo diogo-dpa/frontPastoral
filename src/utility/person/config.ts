@@ -1,23 +1,23 @@
 export const civilSituationOptions = [
   {
     label: 'Solteiro(a)',
-    value: 'solteiro(a)'
+    value: 'solteiro'
   },
   {
     label: 'Casado(a)',
-    value: 'casado(a)'
+    value: 'casado'
   },
   {
-    label: 'Separado(a)',
-    value: 'separado(a)'
+    label: 'União Estável',
+    value: 'uniao-estavel'
   },
   {
     label: 'Divorciado(a)',
-    value: 'divorciado(a)'
+    value: 'divorciado'
   },
   {
     label: 'Viúvo(a)',
-    value: 'viuvo(a)'
+    value: 'viuvo'
   }
 ];
 
@@ -70,7 +70,7 @@ export const raceOptions = [
   },
   {
     label: 'Não declarado',
-    value: 'nao-declaro'
+    value: 'nao-declarado'
   }
 ];
 
@@ -117,5 +117,32 @@ export const schoolLevelOptions = [
   {
     label: 'Pós Graduação Completo',
     value: 'pos-graduacao-completo'
+  }
+];
+
+export const ocupationOptions = [
+  {
+    label: 'Desempregado',
+    value: 'desempregado'
+  },
+  {
+    label: 'Informal',
+    value: 'informal'
+  },
+  {
+    label: 'Carteira Assinada',
+    value: 'carteira-assinada'
+  },
+  {
+    label: 'Empresário/Autônomo',
+    value: 'empresario-autonomo'
+  },
+  {
+    label: 'Aposentado',
+    value: 'aposentado'
+  },
+  {
+    label: 'Outros',
+    value: 'outros'
   }
 ];

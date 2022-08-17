@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 import {
   BIRTH_DATE_DIGITS,
-  CELLPHONE_DIGITS,
   CPF_DOCUMENT_DIGITS,
+  CTPS_DOCUMENT_DIGITS,
   RG_DOCUMENT_DIGITS
 } from '../consts';
 import { validateCPF, validateDate } from '../methods';
@@ -30,7 +30,10 @@ export const newPersonFormSchema = yup
     gender: yup.string().required('Campo obrigatório'),
     genderCategory: yup.string().required('Campo obrigatório'),
     race: yup.string().required('Campo obrigatório'),
-    childrenQuantity: yup.string().required('Campo obrigatório'),
+    childrenQuantity: yup
+      .string()
+      .matches(new RegExp('^[0-9]*$'), 'Valor inválido')
+      .required('Campo obrigatório'),
     nationality: yup.string().required('Campo obrigatório'),
     birthCity: yup.string().required('Campo obrigatório'),
     telephone: yup
@@ -39,17 +42,12 @@ export const newPersonFormSchema = yup
         new RegExp('[(]?[0-9]{2}[)]? [0-9]{4}-?[0-9]{4}|^$|/^w+$/'),
         'Valor inválido'
       ),
-    ctps: yup.string().required('Campo obrigatório'),
-    hasHealthProblem: yup
+    ctps: yup
       .string()
-      // .bool()
-      // .oneOf([true, false], 'Campo inválido')
+      .min(CTPS_DOCUMENT_DIGITS, 'Valor inválido')
       .required('Campo obrigatório'),
-    isCareSituation: yup
-      .string()
-      // .boolean()
-      // .oneOf([true, false], 'Campo inválido')
-      .required('Campo obrigatório'),
+    hasHealthProblem: yup.string().required('Campo obrigatório'),
+    isCareSituation: yup.string().required('Campo obrigatório'),
     healthDescription: yup.string(),
     referenceServices: yup.string(),
     schoolLevel: yup.string().required('Campo obrigatório'),

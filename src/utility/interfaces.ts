@@ -6,6 +6,8 @@ export type InputType = {
   selectOptions?: SelectInputOptions[] | null;
   selectLabel?: string | null;
   textarea?: boolean;
+  isRequired?: boolean;
+  regexMask?: string;
 };
 
 export type InputFormType = {

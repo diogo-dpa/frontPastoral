@@ -20,8 +20,8 @@ export interface PersonData {
   birthCity: string;
   telephone: string;
   ctps: string;
-  hasHealthProblem: '';
-  isCareSituation: '';
+  hasHealthProblem: 'sim' | 'nao' | '';
+  isCareSituation: 'sim' | 'nao' | '';
   healthDescription?: string;
   referenceServices?: string;
   schoolLevel: string;

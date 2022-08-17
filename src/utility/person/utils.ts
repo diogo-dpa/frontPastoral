@@ -3,10 +3,12 @@ import {
   civilSituationOptions,
   genderCategoryOptions,
   genderOptions,
+  ocupationOptions,
   raceOptions,
   schoolLevelOptions,
   yesOrNoOptions
 } from './config';
+import { PersonData } from './interfaces';
 
 export const personInputsFields: InputFormType[] = [
   {
@@ -15,7 +17,8 @@ export const personInputsFields: InputFormType[] = [
         name: 'name',
         error: 'name',
         errorMessage: 'name',
-        placeholder: 'Nome completo'
+        placeholder: 'Nome completo',
+        isRequired: true
       }
     ]
   },
@@ -25,13 +28,16 @@ export const personInputsFields: InputFormType[] = [
         name: 'cpf',
         error: 'cpf',
         errorMessage: 'cpf',
-        placeholder: 'CPF'
+        placeholder: 'CPF',
+        isRequired: true,
+        regexMask: '999.999.999-99'
       },
       {
         name: 'rg',
         error: 'rg',
         errorMessage: 'rg',
-        placeholder: 'RG'
+        placeholder: 'RG',
+        isRequired: true
       }
     ]
   },
@@ -41,13 +47,16 @@ export const personInputsFields: InputFormType[] = [
         name: 'birthDate',
         error: 'birthDate',
         errorMessage: 'birthDate',
-        placeholder: 'Data de nascimento'
+        placeholder: 'Data de nascimento',
+        isRequired: true,
+        regexMask: '99/99/9999'
       },
       {
         name: 'mothersName',
         error: 'mothersName',
         errorMessage: 'mothersName',
-        placeholder: 'Nome da mãe'
+        placeholder: 'Nome da mãe',
+        isRequired: true
       }
     ]
   },
@@ -59,7 +68,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'civilSituation',
         placeholder: 'Estado civil',
         selectOptions: civilSituationOptions,
-        selectLabel: 'Estado civil'
+        selectLabel: 'Estado civil',
+        isRequired: true
       },
       {
         name: 'gender',
@@ -67,7 +77,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'gender',
         placeholder: 'Gênero',
         selectOptions: genderOptions,
-        selectLabel: 'Gênero'
+        selectLabel: 'Gênero',
+        isRequired: true
       }
     ]
   },
@@ -79,7 +90,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'genderCategory',
         placeholder: 'Categoria gênero',
         selectOptions: genderCategoryOptions,
-        selectLabel: 'Categoria gênero'
+        selectLabel: 'Categoria gênero',
+        isRequired: true
       },
       {
         name: 'race',
@@ -87,7 +99,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'race',
         placeholder: 'Raça',
         selectOptions: raceOptions,
-        selectLabel: 'Raça'
+        selectLabel: 'Raça',
+        isRequired: true
       }
     ]
   },
@@ -97,13 +110,15 @@ export const personInputsFields: InputFormType[] = [
         name: 'childrenQuantity',
         error: 'childrenQuantity',
         errorMessage: 'childrenQuantity',
-        placeholder: 'Quantidade de filhos'
+        placeholder: 'Quantidade de filhos',
+        isRequired: true
       },
       {
         name: 'ctps',
         error: 'ctps',
         errorMessage: 'ctps',
-        placeholder: 'Nº carteira de trabalho'
+        placeholder: 'Nº carteira de trabalho',
+        isRequired: true
       }
     ]
   },
@@ -113,13 +128,15 @@ export const personInputsFields: InputFormType[] = [
         name: 'nationality',
         error: 'nationality',
         errorMessage: 'nationality',
-        placeholder: 'Nacionalidade'
+        placeholder: 'Nacionalidade',
+        isRequired: true
       },
       {
         name: 'birthCity',
         error: 'birthCity',
         errorMessage: 'birthCity',
-        placeholder: 'Naturalidade'
+        placeholder: 'Naturalidade',
+        isRequired: true
       }
     ]
   },
@@ -141,7 +158,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'hasHealthProblem',
         placeholder: 'Problema de saúde?',
         selectOptions: yesOrNoOptions,
-        selectLabel: 'Tem problema de saúde?'
+        selectLabel: 'Tem problema de saúde?',
+        isRequired: true
       },
       {
         name: 'isCareSituation',
@@ -149,7 +167,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'isCareSituation',
         placeholder: 'Situação de rua?',
         selectOptions: yesOrNoOptions,
-        selectLabel: 'Está em situação de rua?'
+        selectLabel: 'Está em situação de rua?',
+        isRequired: true
       }
     ]
   },
@@ -183,7 +202,8 @@ export const personInputsFields: InputFormType[] = [
         errorMessage: 'schoolLevel',
         placeholder: 'Grau de escolaridade',
         selectOptions: schoolLevelOptions,
-        selectLabel: 'Grau de escolaridade'
+        selectLabel: 'Grau de escolaridade',
+        isRequired: true
       }
     ]
   },
@@ -215,7 +235,10 @@ export const personInputsFields: InputFormType[] = [
         name: 'ocupation',
         error: 'ocupation',
         errorMessage: 'ocupation',
-        placeholder: 'Ocupação'
+        placeholder: 'Ocupação',
+        isRequired: true,
+        selectOptions: ocupationOptions,
+        selectLabel: 'Ocupação'
       },
       {
         name: 'ocupationDetails',
@@ -227,3 +250,33 @@ export const personInputsFields: InputFormType[] = [
     ]
   }
 ];
+
+export function formatPersonData(personData: PersonData) {
+  return {
+    nome: personData.name,
+    dataNascimento: new Date(),
+    cpf: personData.cpf,
+    rg: personData.rg,
+    nomeMae: personData.mothersName,
+    situacaoCivil: personData.civilSituation,
+    genero: personData.gender,
+    categoriaGenero: personData.genderCategory,
+    racaCor: personData.race,
+    quantidadeFilhos: parseInt(personData.childrenQuantity, 10),
+    nacionalidade: personData.nationality,
+    telefone: personData.telephone,
+    naturalidade: personData.birthCity,
+    ctps: personData.ctps,
+    problemaDeSaude: personData.hasHealthProblem === 'sim' ? true : false,
+    situacaoDeRua: personData.isCareSituation === 'sim' ? true : false,
+    descricaoSaude: personData.healthDescription,
+    portadorDeficiencia: false,
+    descricaoDeficiencia: personData.healthDescription,
+    servicosDeReferencia: personData.referenceServices,
+    grauEscolar: personData.schoolLevel,
+    aperfeicoamentoHabilidades: personData.skills,
+    observacoes: personData.observations,
+    ocupacao: personData.ocupation,
+    detalheOcupacao: personData.ocupationDetails
+  };
+}

@@ -7,3 +7,7 @@ export const Api = axios.create({
       : process.env.NEXT_PUBLIC_STRAPI_ENDPOINT_PROD
   }`
 });
+
+export const LocalApi = axios.create({
+  baseURL: `/api`
+});
