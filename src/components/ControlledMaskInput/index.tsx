@@ -43,7 +43,8 @@ const ControlledInputMask: React.FC<ControlledInputMaskCompleteProps> = ({
           {(inputProps: any) => (
             <Box
               sx={{
-                maxWidth
+                maxWidth,
+                width: '100%'
               }}
             >
               <TextField
@@ -55,10 +56,12 @@ const ControlledInputMask: React.FC<ControlledInputMaskCompleteProps> = ({
                 max={maxLength}
                 sx={{
                   width: '100%',
-                  '& input::placeholder, & textarea::placeholder, & input': {
-                    fontSize: '18px'
+                  '& input::placeholder, & textarea::placeholder': {
+                    color: '#333',
+                    opacity: 0.7
                   },
                   '& input': {
+                    fontSize: '18px',
                     bgcolor: rest.required ? '#ffef3975' : '',
                     pt: '16px'
                   }

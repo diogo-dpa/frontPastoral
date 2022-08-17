@@ -7,7 +7,9 @@ export type InputType = {
   selectLabel?: string | null;
   textarea?: boolean;
   isRequired?: boolean;
+  maxLength?: number;
   regexMask?: string;
+  helperText?: string;
 };
 
 export type InputFormType = {

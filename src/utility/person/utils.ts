@@ -1,4 +1,13 @@
+import {
+  CTPS_DOCUMENT_DIGITS,
+  MAX_INPUT_DIGITS,
+  MAX_INPUT_FEW_DIGITS,
+  MAX_INPUT_INTERMEDIATE_DIGITS,
+  RG_DOCUMENT_DIGITS_MAX,
+  TELEPHONE_DIGITS
+} from '@utility/consts';
 import { InputFormType } from '@utility/interfaces';
+import { convertStringBRLToDateFormat } from '@utility/methods';
 import {
   civilSituationOptions,
   genderCategoryOptions,
@@ -18,7 +27,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'name',
         errorMessage: 'name',
         placeholder: 'Nome completo',
-        isRequired: true
+        isRequired: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -37,7 +47,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'rg',
         errorMessage: 'rg',
         placeholder: 'RG',
-        isRequired: true
+        isRequired: true,
+        maxLength: RG_DOCUMENT_DIGITS_MAX
       }
     ]
   },
@@ -56,7 +67,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'mothersName',
         errorMessage: 'mothersName',
         placeholder: 'Nome da mãe',
-        isRequired: true
+        isRequired: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -111,14 +123,16 @@ export const personInputsFields: InputFormType[] = [
         error: 'childrenQuantity',
         errorMessage: 'childrenQuantity',
         placeholder: 'Quantidade de filhos',
-        isRequired: true
+        isRequired: true,
+        maxLength: MAX_INPUT_FEW_DIGITS
       },
       {
         name: 'ctps',
         error: 'ctps',
         errorMessage: 'ctps',
         placeholder: 'Nº carteira de trabalho',
-        isRequired: true
+        isRequired: true,
+        maxLength: CTPS_DOCUMENT_DIGITS
       }
     ]
   },
@@ -129,14 +143,16 @@ export const personInputsFields: InputFormType[] = [
         error: 'nationality',
         errorMessage: 'nationality',
         placeholder: 'Nacionalidade',
-        isRequired: true
+        isRequired: true,
+        maxLength: MAX_INPUT_INTERMEDIATE_DIGITS
       },
       {
         name: 'birthCity',
         error: 'birthCity',
         errorMessage: 'birthCity',
         placeholder: 'Naturalidade',
-        isRequired: true
+        isRequired: true,
+        maxLength: MAX_INPUT_INTERMEDIATE_DIGITS
       }
     ]
   },
@@ -146,7 +162,9 @@ export const personInputsFields: InputFormType[] = [
         name: 'telephone',
         error: 'telephone',
         errorMessage: 'telephone',
-        placeholder: 'Telefone'
+        placeholder: 'Telefone',
+        helperText: 'Formato: 99 99999999 ou 99888887777',
+        maxLength: TELEPHONE_DIGITS
       }
     ]
   },
@@ -179,7 +197,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'healthDescription',
         errorMessage: 'healthDescription',
         placeholder: 'Descrição da saúde',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -199,7 +218,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'disabledDescription',
         errorMessage: 'disabledDescription',
         placeholder: 'Descrição da deficiência',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -210,7 +230,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'referenceServices',
         errorMessage: 'referenceServices',
         placeholder: 'Referências de serviços',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -234,7 +255,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'skills',
         errorMessage: 'skills',
         placeholder: 'Habilidades',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -245,7 +267,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'observations',
         errorMessage: 'observations',
         placeholder: 'Observações',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   },
@@ -265,7 +288,8 @@ export const personInputsFields: InputFormType[] = [
         error: 'ocupationDetails',
         errorMessage: 'ocupationDetails',
         placeholder: 'Detalhes ocupação',
-        textarea: true
+        textarea: true,
+        maxLength: MAX_INPUT_DIGITS
       }
     ]
   }
@@ -274,7 +298,7 @@ export const personInputsFields: InputFormType[] = [
 export function formatPersonData(personData: PersonData) {
   return {
     nome: personData.name,
-    dataNascimento: new Date(),
+    dataNascimento: convertStringBRLToDateFormat(personData.birthDate),
     cpf: personData.cpf,
     rg: personData.rg,
     nomeMae: personData.mothersName,

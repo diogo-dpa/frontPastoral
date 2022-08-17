@@ -75,10 +75,10 @@ export default function Modal({
           {onSuccess && (
             <Box
               sx={{
-                width: '60%',
+                width: '100%',
                 m: '0 auto',
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-evenly'
               }}
             >
               <Button

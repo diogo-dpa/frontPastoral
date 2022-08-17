@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { LocalApi } from '@services/api';
+import { InputType } from '@utility/interfaces';
 import { PersonData } from '@utility/person/interfaces';
 import { personInputsFields } from '@utility/person/utils';
 import { newPersonFormSchema } from '@utility/validations/registerPersonValidation';
@@ -57,8 +58,6 @@ const CadastroPessoas = () => {
       setOpenModal(false);
       setLoadingSubmit(true);
 
-      console.log('data', personDataForm);
-
       await LocalApi.post('/newPerson', {
         ...personDataForm
       });
@@ -85,6 +84,51 @@ const CadastroPessoas = () => {
   const handleOpenModal = (data: PersonData) => {
     setPersonDataForm(data);
     setOpenModal(true);
+  };
+
+  const renderContent = (section: InputType[]) => {
+    return section.map(inputField => {
+      if (!inputField.regexMask) {
+        return (
+          <ControlledInput
+            name={inputField.name}
+            variant="filled"
+            control={control}
+            error={!!errors[inputField.error]}
+            errorMessage={errors[inputField.error]?.message}
+            placeholder={inputField.placeholder}
+            isSelectInput={!!inputField.selectOptions}
+            selectInputOptions={inputField.selectOptions}
+            selectLabel={inputField?.selectLabel}
+            textarea={inputField.textarea}
+            required={inputField.isRequired}
+            maxLength={inputField.maxLength}
+            helperText={inputField.helperText}
+            css={
+              section.length === 1
+                ? {
+                    'grid-column-start': `${1}`,
+                    'grid-column-end': `${3}`
+                  }
+                : {}
+            }
+          />
+        );
+      }
+
+      return (
+        <ControlledInputMask
+          name={inputField.name}
+          variant="filled"
+          control={control}
+          error={!!errors[inputField.error]}
+          errorMessage={errors[inputField.error]?.message}
+          placeholder={inputField.placeholder}
+          regexMask={inputField.regexMask}
+          required={inputField.isRequired}
+        />
+      );
+    });
   };
 
   return (
@@ -146,48 +190,17 @@ const CadastroPessoas = () => {
             <Box
               sx={{
                 width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
+                display: 'grid',
+                gridTemplateColumns: ['1fr', '1fr 1fr'],
+                columnGap: ['0px', '20px'],
+                rowGap: ['20px', '0px'],
                 '& + &': {
                   mt: '24px'
                 },
                 justifyContent: 'space-evenly'
               }}
             >
-              {section.section.map(inputField => {
-                if (!inputField.regexMask) {
-                  return (
-                    <ControlledInput
-                      name={inputField.name}
-                      variant="filled"
-                      control={control}
-                      error={!!errors[inputField.error]}
-                      errorMessage={errors[inputField.error]?.message}
-                      placeholder={inputField.placeholder}
-                      isSelectInput={!!inputField.selectOptions}
-                      selectInputOptions={inputField.selectOptions ?? []}
-                      selectLabel={inputField?.selectLabel ?? ''}
-                      textarea={inputField.textarea ?? false}
-                      isRequired={inputField.isRequired ?? false}
-                      maxWidth={`${100 / section.section.length - 5}%`}
-                    />
-                  );
-                }
-
-                return (
-                  <ControlledInputMask
-                    name={inputField.name}
-                    variant="filled"
-                    control={control}
-                    error={!!errors[inputField.error]}
-                    errorMessage={errors[inputField.error]?.message}
-                    placeholder={inputField.placeholder}
-                    regexMask={inputField.regexMask}
-                    maxWidth={`${100 / section.section.length - 5}%`}
-                    required={inputField.isRequired ?? false}
-                  />
-                );
-              })}
+              {renderContent(section.section)}
             </Box>
           ))}
 
@@ -206,6 +219,7 @@ const CadastroPessoas = () => {
                 bgcolor: '#0c5017'
               }
             }}
+            disabled={loadingSubmit}
           >
             {loadingSubmit ? <CircularProgress size="20px" /> : 'Cadastrar'}
           </Button>

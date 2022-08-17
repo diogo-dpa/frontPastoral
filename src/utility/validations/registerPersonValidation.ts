@@ -39,7 +39,7 @@ export const newPersonFormSchema = yup
     telephone: yup
       .string()
       .matches(
-        new RegExp('[(]?[0-9]{2}[)]? [0-9]{4}-?[0-9]{4}|^$|/^w+$/'),
+        new RegExp('[(]?[0-9]{2}[)]? ?[0-9]{4}-?[0-9]{4}|^$|/^w+$/'),
         'Valor inválido'
       ),
     ctps: yup
@@ -48,6 +48,8 @@ export const newPersonFormSchema = yup
       .required('Campo obrigatório'),
     hasHealthProblem: yup.string().required('Campo obrigatório'),
     isCareSituation: yup.string().required('Campo obrigatório'),
+    isDisabledPerson: yup.string().required('Campo obrigatório'),
+    disabledDescription: yup.string(),
     healthDescription: yup.string(),
     referenceServices: yup.string(),
     schoolLevel: yup.string().required('Campo obrigatório'),

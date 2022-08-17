@@ -12,7 +12,7 @@ export default async function handler(
   res: NextApiResponse<ResponseErrorAttributes>
 ) {
   if (req.method === 'POST') {
-    const { token, token_strapi } = req.cookies;
+    const { token } = req.cookies;
     const { authenticated } = await isAuthenticated(token);
     if (!authenticated) {
       return res.status(401).json({ message: 'Não autorizado' });
@@ -20,8 +20,17 @@ export default async function handler(
 
     const data = req.body;
     const formattedData = formatPersonData(data);
+
     try {
-      await Api.post('/api/pessoas', { data: formattedData });
+      await Api.post(
+        '/api/pessoas',
+        { data: formattedData },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN_STRAPI}`
+          }
+        }
+      );
       return res.status(200).json({ message: 'Criado com sucesso.' });
     } catch (error) {
       console.log(error.message);

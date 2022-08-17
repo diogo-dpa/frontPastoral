@@ -22,12 +22,13 @@ type ControlledInputCustomProps = {
   RightElementComponent?: ReactElement;
   error?: boolean;
   errorMessage?: string;
-  bg?: string;
   maxWidth?: number | string;
   isSelectInput?: boolean;
   selectLabel?: string;
   selectInputOptions?: SelectInputOptions[];
   textarea?: boolean;
+  helperText?: string;
+  css?: any;
 } & HTMLProps<HTMLInputElement> &
   HTMLProps<HTMLSelectElement> &
   SelectProps &
@@ -45,14 +46,17 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
   RightElementComponent,
   error,
   errorMessage,
-  bg = 'palette.white',
   maxWidth = '100%',
   textarea = false,
+  required = false,
   isSelectInput = false,
   selectLabel = 'Selecione',
   selectInputOptions = [],
+  css = {},
+  maxLength,
+  helperText,
   ...rest
-}) => {
+}: ControlledInputProps) => {
   if (isSelectInput) {
     return (
       <Controller
@@ -61,24 +65,33 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
         render={({ field }) => (
           <FormControl
             sx={{
+              width: 1,
               maxWidth,
-              width: ['300px', '350px'],
-              fontSize: '18px'
+              fontSize: '18px',
+              ...css
             }}
           >
-            <InputLabel>{selectLabel}</InputLabel>
+            <InputLabel
+              sx={{
+                fontSize: '18px'
+              }}
+            >
+              {selectLabel}
+            </InputLabel>
             <Select
               {...rest}
               {...field}
               sx={{
                 cursor: 'pointer',
-                border: 'none',
-                borderBottom: error ? '1.5px solid red' : '',
-                '& input::placeholder': {
-                  fontSize: '16px',
-                  color: 'rgba(0, 0, 0, 0.371)'
+                '& input::placeholder, & input': {
+                  fontSize: '18px'
+                },
+                '& .MuiSelect-select': {
+                  bgcolor: required ? '#ffef3975' : '',
+                  borderBottom: error ? '2px solid red' : ''
                 }
               }}
+              required={required}
               ref={field.ref}
             >
               {selectInputOptions.map(option => (
@@ -86,7 +99,7 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
                   key={option.value}
                   value={option.value}
                   sx={{
-                    fontSize: '18px'
+                    fontSize: '16px'
                   }}
                 >
                   {option.label}
@@ -116,16 +129,24 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
       render={({ field }) => (
         <TextField
           error={error}
-          helperText={errorMessage}
+          helperText={errorMessage ?? helperText}
           {...field}
           {...rest}
           sx={{
+            ...css,
             maxWidth,
             width: '100%',
-            '& input::placeholder, & textarea::placeholder, & input': {
-              fontSize: '18px'
+            '& input::placeholder, & textarea::placeholder': {
+              color: '#333',
+              opacity: 0.7
+            },
+            '& input, & textarea': {
+              fontSize: '18px',
+              bgcolor: required ? '#ffef3975' : '',
+              pt: '16px'
             }
           }}
+          required={required}
           multiline={textarea}
           rows={textarea ? 4 : 1}
           InputProps={{
@@ -139,6 +160,9 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
                 {RightElementComponent}
               </InputAdornment>
             )
+          }}
+          inputProps={{
+            maxLength
           }}
         />
       )}

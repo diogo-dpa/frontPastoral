@@ -74,3 +74,13 @@ export const validateCPF = (cpf: string) => {
 
   return true;
 };
+
+export const convertStringBRLToDateFormat = (dateBRLFormat: string) => {
+  if (!dateBRLFormat) return null;
+  const splitedDate = dateBRLFormat.split('/');
+  return new Date(
+    Number(splitedDate[2]),
+    Number(splitedDate[1]) - 1,
+    Number(splitedDate[0])
+  );
+};
