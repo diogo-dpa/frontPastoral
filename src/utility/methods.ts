@@ -84,3 +84,31 @@ export const convertStringBRLToDateFormat = (dateBRLFormat: string) => {
     Number(splitedDate[0])
   );
 };
+
+export const formatDateToPTBRDayMonthYear = (value: string | null) => {
+  if (value === null) return null;
+  const convertedDate = new Date(value);
+  return new Intl.DateTimeFormat('pt-BR', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  }).format(convertedDate);
+};
+
+export const formatDateToPTBR = (value: string | null) => {
+  if (value === null) return null;
+  const convertedDate = new Date(value);
+  return new Intl.DateTimeFormat('pt-BR', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  }).format(convertedDate);
+};
+
+export const removeSpecialCharacters = (value: string) => {
+  if (value === undefined) return '';
+  const er = /[^a-z0-9]/gi;
+  return value.replace(er, '');
+};

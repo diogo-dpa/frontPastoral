@@ -31,4 +31,5 @@ export interface PersonData {
   observations?: string;
   ocupation: string;
   ocupationDetails?: string;
+  createdAt?: string;
 }

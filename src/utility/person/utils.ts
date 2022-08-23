@@ -7,7 +7,10 @@ import {
   TELEPHONE_DIGITS
 } from '@utility/consts';
 import { InputFormType } from '@utility/interfaces';
-import { convertStringBRLToDateFormat } from '@utility/methods';
+import {
+  convertStringBRLToDateFormat,
+  removeSpecialCharacters
+} from '@utility/methods';
 import {
   civilSituationOptions,
   genderCategoryOptions,
@@ -297,30 +300,15 @@ export const personInputsFields: InputFormType[] = [
 
 export function formatPersonData(personData: PersonData) {
   return {
-    nome: personData.name,
+    ...personData,
+    nome: personData.name.toUpperCase(),
+    cpf: removeSpecialCharacters(personData.cpf),
+    rg: removeSpecialCharacters(personData.rg),
+    mothersName: personData.mothersName.toUpperCase(),
     dataNascimento: convertStringBRLToDateFormat(personData.birthDate),
-    cpf: personData.cpf,
-    rg: personData.rg,
-    nomeMae: personData.mothersName,
-    situacaoCivil: personData.civilSituation,
-    genero: personData.gender,
-    categoriaGenero: personData.genderCategory,
-    racaCor: personData.race,
     quantidadeFilhos: parseInt(personData.childrenQuantity, 10),
-    nacionalidade: personData.nationality,
-    telefone: personData.telephone,
-    naturalidade: personData.birthCity,
-    ctps: personData.ctps,
     problemaDeSaude: personData.hasHealthProblem === 'sim' ? true : false,
     situacaoDeRua: personData.isCareSituation === 'sim' ? true : false,
-    descricaoSaude: personData.healthDescription,
-    portadorDeficiencia: personData.isDisabledPerson === 'sim' ? true : false,
-    descricaoDeficiencia: personData.disabledDescription,
-    servicosDeReferencia: personData.referenceServices,
-    grauEscolar: personData.schoolLevel,
-    aperfeicoamentoHabilidades: personData.skills,
-    observacoes: personData.observations,
-    ocupacao: personData.ocupation,
-    detalheOcupacao: personData.ocupationDetails
+    portadorDeficiencia: personData.isDisabledPerson === 'sim' ? true : false
   };
 }
