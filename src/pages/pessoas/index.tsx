@@ -5,11 +5,12 @@ import { isAuthenticated } from '@services/firebase/authentication';
 import { GetServerSidePropsContext } from 'next';
 import PageHead from '@components/PageHead';
 import { Box } from '@mui/system';
-import { CommonInput } from '@components/CommonInput';
-import UsersTable from '@components/UsersTable';
-import { Button, Skeleton, Typography } from '@mui/material';
+import PeopleTable from '@components/People/PeopleTable';
+import { Skeleton } from '@mui/material';
 import Link from 'next/link';
 import { getPeople, getPeopleByFields } from '@services/strapi/person';
+import SearchArea from '@components/People/SearchArea';
+import CommonButton from '@components/CommonButton';
 
 const UsersPage = () => {
   const [users, setUsers] = useState(null);
@@ -18,6 +19,7 @@ const UsersPage = () => {
   const [typedCPF, setTypedCPF] = useState('');
   const [typedRG, setTypedRG] = useState('');
   const [loading, setLoading] = useState(false);
+  const [usedSearchedArea, setUsedSearchedArea] = useState(false);
 
   useEffect(() => {
     const getRegisteredPeople = async () => {
@@ -41,6 +43,7 @@ const UsersPage = () => {
     e.preventDefault();
     if (typedName !== '' || typedCPF !== '' || typedRG !== '') {
       setLoading(true);
+      setUsedSearchedArea(true);
       try {
         const searchedUsers = await getPeopleByFields(
           typedName,
@@ -62,9 +65,11 @@ const UsersPage = () => {
     setTypedCPF('');
     setTypedRG('');
     setFilteredUsers(users);
+    setUsedSearchedArea(false);
   };
 
   const renderSkeletonWhileLoading = () => {
+    const skeletonLinesQuantity = new Array(6).fill(1);
     return (
       <Box width="100%" mt="32px">
         <Skeleton
@@ -75,48 +80,15 @@ const UsersPage = () => {
             fontSize: '1rem'
           }}
         />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
-        <Skeleton
-          variant="rectangular"
-          animation="wave"
-          height="40px"
-          width="100%"
-          sx={{ mb: 1 }}
-        />
+        {skeletonLinesQuantity.map(_ => (
+          <Skeleton
+            variant="rectangular"
+            animation="wave"
+            height="40px"
+            width="100%"
+            sx={{ mb: 1 }}
+          />
+        ))}
       </Box>
     );
   };
@@ -135,102 +107,35 @@ const UsersPage = () => {
             maxWidth: '85%'
           }}
         >
-          <Box
-            component="section"
-            sx={{
-              width: '100%',
-              minHeight: '200px',
-              m: '48px 0px'
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
-            >
-              <Typography>Filtrar por</Typography>
-              <Typography>Busque pelo nome, cpf ou rg</Typography>
-            </Box>
-            <Box
-              component="form"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
-              noValidate
-            >
-              <Box
-                sx={{
-                  width: 1,
-                  display: 'flex',
-                  justifyContent: 'space-evenly',
-                  mt: 3
-                }}
-              >
-                <CommonInput
-                  placeholder="Nome"
-                  value={typedName}
-                  onChange={e => setTypedName(e.target.value)}
-                />
-                <CommonInput
-                  placeholder="CPF"
-                  value={typedCPF}
-                  onChange={e => setTypedCPF(e.target.value)}
-                />
-                <CommonInput
-                  placeholder="RG"
-                  value={typedRG}
-                  onChange={e => setTypedRG(e.target.value)}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: '80%',
-                  display: 'flex',
-                  justifyContent: 'space-evenly'
-                }}
-              >
-                <Button
-                  sx={{
-                    mt: 2,
-                    bgcolor: 'blue',
-                    p: '8px 24px'
-                  }}
-                  onClick={handleResetFilters}
-                >
-                  Limpar filtros
-                </Button>
+          <SearchArea
+            typedName={typedName}
+            typedCPF={typedCPF}
+            typedRG={typedRG}
+            setTypedName={setTypedName}
+            setTypedCPF={setTypedCPF}
+            setTypedRG={setTypedRG}
+            handleResetFilters={handleResetFilters}
+            handleSearchPersonByField={handleSearchPersonByField}
+          />
 
-                <Button
-                  sx={{
-                    mt: 2,
-                    bgcolor: 'red',
-                    p: '8px 24px'
-                  }}
-                  onClick={handleSearchPersonByField}
-                  type="submit"
-                >
-                  Pesquisar
-                </Button>
-              </Box>
-            </Box>
-          </Box>
+          <Link href="/pessoas/cadastro">
+            <CommonButton
+              text="Cadastrar"
+              bgcolor="red"
+              bgcolorHover="blue"
+              customCSS={{
+                mb: 2
+              }}
+            />
+          </Link>
 
-          <Button
-            sx={{
-              mb: 2,
-              bgcolor: 'red'
-            }}
-          >
-            <Link href="/pessoas/cadastro">Cadastrar</Link>
-          </Button>
           {loading ? (
             renderSkeletonWhileLoading()
           ) : (
-            <UsersTable registeredPeople={filteredUsers} />
+            <PeopleTable
+              registeredPeople={filteredUsers}
+              searchedPersonFlag={usedSearchedArea}
+            />
           )}
         </Box>
       </>
