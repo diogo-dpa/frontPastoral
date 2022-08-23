@@ -24,3 +24,7 @@ export interface EnhancedTableProps {
   orderBy: string;
   rowCount: number;
 }
+
+export interface EnhancedTableToolbarProps {
+  searchedPersonFlag: boolean;
+}

@@ -12,8 +12,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-import { TableData, EnhancedTableProps, Order } from './interfaces';
-import { getComparator, headCells, stableSort } from './usersTableUtils';
+import {
+  TableData,
+  EnhancedTableProps,
+  Order,
+  EnhancedTableToolbarProps
+} from './interfaces';
+import {
+  getComparator,
+  headCells,
+  peopleDataModal,
+  stableSort
+} from './peopleTableUtils';
 import InfoIcon from '@mui/icons-material/Info';
 import Modal from '@components/Modal';
 import { PersonData } from '@utility/person/interfaces';
@@ -64,7 +74,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-const EnhancedTableToolbar = () => {
+const EnhancedTableToolbar = ({
+  searchedPersonFlag
+}: EnhancedTableToolbarProps) => {
   return (
     <Toolbar
       sx={{
@@ -80,17 +92,23 @@ const EnhancedTableToolbar = () => {
         id="tableTitle"
         component="div"
       >
-        Pessoas adicionadas recentemente
+        {searchedPersonFlag
+          ? 'Resultado da busca'
+          : 'Pessoas adicionadas recentemente'}
       </Typography>
     </Toolbar>
   );
 };
 
-interface UsersTableProps {
+interface PeopleTableProps {
   registeredPeople: PersonData[];
+  searchedPersonFlag: boolean;
 }
 
-export default function UsersTable({ registeredPeople = [] }: UsersTableProps) {
+export default function PeopleTable({
+  registeredPeople = [],
+  searchedPersonFlag
+}: PeopleTableProps) {
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] =
     useState<
@@ -113,7 +131,7 @@ export default function UsersTable({ registeredPeople = [] }: UsersTableProps) {
     setOrderBy(property);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_, newPage: number) => {
     setPage(newPage);
   };
 
@@ -126,17 +144,31 @@ export default function UsersTable({ registeredPeople = [] }: UsersTableProps) {
     if (userSelected) {
       return (
         <Box>
-          <Box>
-            <Typography>Nome: {userSelected.name}</Typography>
-            <Typography>CPF: {userSelected.cpf}</Typography>
-            <Typography>
-              Data de Nascimento: {userSelected.birthDate}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography>Naturalidade: {userSelected.birthCity}</Typography>
-            <Typography>Cadastrado em: {userSelected.createdAt}</Typography>
-          </Box>
+          {peopleDataModal.map(section => (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: [
+                  '1fr',
+                  `repeat(${section.section.length}, 1fr)`
+                ],
+                mb: [0, 1]
+              }}
+            >
+              {section.section.map(field => (
+                <Typography
+                  sx={{
+                    fontSize: field.highlight ? '16px' : '14px',
+                    fontWeight: field.highlight ? 'bold' : '',
+                    color: field.highlight ? 'green' : '',
+                    mb: [1, 0]
+                  }}
+                >
+                  {field.label}: {userSelected[field.field]}
+                </Typography>
+              ))}
+            </Box>
+          ))}
         </Box>
       );
     }
@@ -163,7 +195,7 @@ export default function UsersTable({ registeredPeople = [] }: UsersTableProps) {
       <Paper
         sx={{ width: '100%', mb: 2, bgcolor: '#ccc', borderRadius: '10px' }}
       >
-        <EnhancedTableToolbar />
+        <EnhancedTableToolbar searchedPersonFlag={searchedPersonFlag} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
