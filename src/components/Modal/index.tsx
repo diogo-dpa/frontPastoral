@@ -18,7 +18,6 @@ const StyledModal = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
-    maxWidth: '500px',
     width: '100%'
   },
   '& .MuiDialogActions-root': {
