@@ -26,7 +26,7 @@ import {
 } from './peopleTableUtils';
 import InfoIcon from '@mui/icons-material/Info';
 import Modal from '@components/Modal';
-import { PersonData } from '@utility/person/interfaces';
+import { PersonData } from '@utility/people/interfaces';
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { order, orderBy, onRequestSort } = props;
@@ -265,7 +265,8 @@ export default function PeopleTable({
                         align="center"
                         sx={{
                           display: 'flex',
-                          alignItems: 'center'
+                          alignItems: 'center',
+                          fontSize: '15px'
                         }}
                       >
                         {user.createdAt}

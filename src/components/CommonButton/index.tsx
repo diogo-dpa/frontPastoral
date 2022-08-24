@@ -22,6 +22,7 @@ const CommonButton = ({
         {...rest}
         sx={{
           ...customCSS,
+          color: 'white',
           bgcolor: bgcolor,
           p: '8px 24px',
           textTransform: 'uppercase',
@@ -41,6 +42,7 @@ const CommonButton = ({
       {...rest}
       sx={{
         ...customCSS,
+        color: 'white',
         bgcolor: bgcolor,
         p: '8px 24px',
         textTransform: 'uppercase',

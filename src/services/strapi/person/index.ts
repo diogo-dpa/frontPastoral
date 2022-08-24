@@ -3,7 +3,7 @@ import {
   formatDateToPTBR,
   formatDateToPTBRDayMonthYear
 } from '@utility/methods';
-import { PersonData } from '@utility/person/interfaces';
+import { PersonData } from '@utility/people/interfaces';
 
 export const getPeople = async () => {
   try {

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { isAuthenticated } from '@services/firebase/authentication';
 import { Api } from '@services/api';
-import { formatPersonData } from '@utility/person/utils';
+import { formatPersonData } from '@utility/people/utils';
 
 type ResponseErrorAttributes = {
   message: string;
