@@ -13,18 +13,6 @@ export interface HeadCell {
   numeric: boolean;
 }
 
-export type Order = 'asc' | 'desc';
-
-export interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof TableData
-  ) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-}
-
 export interface EnhancedTableToolbarProps {
   searchedPersonFlag: boolean;
 }
