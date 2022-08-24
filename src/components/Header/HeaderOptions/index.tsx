@@ -18,10 +18,11 @@ const HeaderOptions = ({ options }: HeaderOptionsProps) => {
             textTransform: 'uppercase',
             a: {
               textDecoration: 'none',
-              color: 'primary.light',
+              color: 'text.secondary',
               transition: 'color 0.2s',
               '&:hover': {
-                color: '#ffffff'
+                fontWeight: 'bold',
+                color: 'text.primary'
               }
             },
             display: ['none', 'block']

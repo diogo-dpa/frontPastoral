@@ -62,7 +62,7 @@ const ControlledInputMask: React.FC<ControlledInputMaskCompleteProps> = ({
                   },
                   '& input': {
                     fontSize: '18px',
-                    bgcolor: rest.required ? '#ffef3975' : '',
+                    bgcolor: rest.required ? 'info.contrastText' : '',
                     pt: '16px'
                   }
                 }}

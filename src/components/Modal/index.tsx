@@ -85,13 +85,13 @@ export default function Modal({
                 onClick={handleClose}
                 sx={{
                   width: '150px',
-                  bgcolor: '#dd2b1f',
+                  bgcolor: 'secondary.main',
                   p: '8px 16px',
                   textTransform: 'uppercase',
+                  color: 'text.secondary',
                   transition: 'bgcolor color 0.2s',
                   '&:hover': {
-                    bgcolor: '#9e2219',
-                    color: '#fff'
+                    bgcolor: 'secondary.dark'
                   }
                 }}
               >
@@ -103,13 +103,13 @@ export default function Modal({
                 onClick={onSuccess}
                 sx={{
                   width: '150px',
-                  bgcolor: '#2389dc',
+                  bgcolor: 'primary.main',
                   p: '8px 16px',
                   textTransform: 'uppercase',
+                  color: 'text.secondary',
                   transition: 'bgcolor color 0.2s',
                   '&:hover': {
-                    bgcolor: '#1462a2',
-                    color: '#fff'
+                    bgcolor: 'primary.dark'
                   }
                 }}
               >

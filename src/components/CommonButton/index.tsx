@@ -11,8 +11,8 @@ type CommonButtonProps = {
 const CommonButton = ({
   text,
   onClickAction = null,
-  bgcolor = 'blue',
-  bgcolorHover = 'red',
+  bgcolor = 'primary.main',
+  bgcolorHover = 'primary.light',
   customCSS = {},
   ...rest
 }: CommonButtonProps) => {
@@ -26,6 +26,7 @@ const CommonButton = ({
           bgcolor: bgcolor,
           p: '8px 24px',
           textTransform: 'uppercase',
+          transition: 'background-color 0.2s',
           '&:hover': {
             bgcolor: bgcolorHover
           }

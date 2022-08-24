@@ -140,7 +140,7 @@ const CadastroPessoas = () => {
           sx={{
             maxWidth: '800px',
             width: '100%',
-            bgcolor: '#ffffff',
+            bgcolor: 'text.secondary',
             marginTop: '56px',
             padding: '40px 24px',
             borderRadius: '10px',
@@ -156,7 +156,7 @@ const CadastroPessoas = () => {
               width: '100%',
               fontSize: '26px',
               fontWeight: '600',
-              color: '#444',
+              color: 'text.primary',
               textTransform: 'uppercase',
               textAlign: 'center',
               mb: '24px'
@@ -176,13 +176,14 @@ const CadastroPessoas = () => {
             <Typography
               component="strong"
               sx={{
-                m: '0px 8px',
-                color: '#ffef39d1',
+                m: '0px 6px 0px 8px',
+                color: 'info.contrastText',
                 fontWeight: 600,
-                fontSize: '20px'
+                fontSize: '20px',
+                textTransform: 'uppercase'
               }}
             >
-              Amarela
+              Laranja
             </Typography>{' '}
             são obrigatórios.
           </Typography>
@@ -212,11 +213,11 @@ const CadastroPessoas = () => {
               width: '90%',
               textTransform: 'uppercase',
               fontWeight: 'bold',
-              bgcolor: 'green',
-              color: '#fff',
+              bgcolor: 'primary.main',
+              color: 'text.secondary',
               transition: 'bgcolor 0.2',
               '&:hover': {
-                bgcolor: '#0c5017'
+                bgcolor: 'primary.dark'
               }
             }}
             disabled={loadingSubmit}

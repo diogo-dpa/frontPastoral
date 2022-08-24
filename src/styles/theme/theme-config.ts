@@ -6,7 +6,12 @@ import {
   DISABLED_COLOR,
   LINK_COLOR,
   BORDER_COLOR,
-  DISABLED_DISABLED_COLOR
+  FONT_DARK_COLOR,
+  SECONDARY_LIGHT_COLOR,
+  PRIMARY_DARK_COLOR,
+  PRIMARY_LIGHT_COLOR,
+  FONT_LIGHT_COLOR,
+  FONT_COLOR_CONTRAST
 } from './color';
 
 import { Components } from '@mui/material/styles/components';
@@ -30,16 +35,24 @@ export const breakpoints = {
 
 export const palette: PaletteOptions = {
   primary: {
-    light: PRIMARY_COLOR,
+    light: PRIMARY_LIGHT_COLOR,
     main: PRIMARY_COLOR,
-    dark: PRIMARY_COLOR
+    dark: PRIMARY_DARK_COLOR
   },
   secondary: {
-    light: SECONDARY_COLOR,
-    main: SECONDARY_COLOR
+    main: SECONDARY_COLOR,
+    light: SECONDARY_LIGHT_COLOR
   },
   background: {
     default: BACKGROUND_COLOR
+  },
+  text: {
+    primary: FONT_DARK_COLOR,
+    secondary: FONT_LIGHT_COLOR
+  },
+  info: {
+    main: FONT_DARK_COLOR,
+    contrastText: FONT_COLOR_CONTRAST
   }
 };
 
@@ -49,61 +62,61 @@ export const typography: TypographyOptions = {
   h1: {
     fontWeight: 'bold',
     fontSize: '2.25rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   h2: {
     fontWeight: 600,
     fontSize: '1.5rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   h3: {
     fontWeight: 600,
     fontSize: '1.3125rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   h4: {
     fontWeight: 500,
     fontSize: '1.125rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   h5: {
     fontWeight: 500,
     fontSize: '1rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   h6: {
     fontWeight: 500,
     fontSize: '0.875rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   body1: {
     fontWeight: 500,
     fontSize: '0.75rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   body2: {
     fontWeight: 'lighter',
     fontSize: '0.625rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   subtitle1: {
     fontWeight: 600,
     fontSize: '1rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   },
 
   subtitle2: {
     fontWeight: 'normal',
     fontSize: '0.75rem',
-    color: PRIMARY_COLOR
+    color: FONT_DARK_COLOR
   }
 };
 
@@ -112,9 +125,9 @@ export const components: Components = {
     styleOverrides: {
       root: {
         '&.Mui-disabled': {
-          backgroundColor: DISABLED_DISABLED_COLOR
+          backgroundColor: DISABLED_COLOR
         },
-        color: PRIMARY_COLOR,
+        color: FONT_DARK_COLOR,
         fontWeight: '500',
         fontSize: '1rem'
       }
@@ -124,7 +137,7 @@ export const components: Components = {
     styleOverrides: {
       root: {
         fontFamily: FONT_FAMILY,
-        color: '#636D76',
+        color: FONT_DARK_COLOR,
         fontSize: '1rem',
         fontWeight: '500'
       },
@@ -176,7 +189,7 @@ export const components: Components = {
       },
       head: {
         fontSize: '14px',
-        color: PRIMARY_COLOR,
+        color: FONT_DARK_COLOR,
         fontWeight: 'normal',
         padding: `10px ${spacing(1)} 2px ${spacing(1)}`
       },
@@ -186,7 +199,7 @@ export const components: Components = {
       body: {
         fontSize: '16px',
         fontWeight: '500',
-        color: PRIMARY_COLOR,
+        color: FONT_DARK_COLOR,
         padding: `10px ${spacing(1)} 10px ${spacing(1)}`,
         borderBottom: `1px solid ${BORDER_COLOR}`
       }
@@ -211,7 +224,7 @@ export const components: Components = {
     styleOverrides: {
       root: {
         '&.Mui-disabled.Mui-checked': {
-          color: PRIMARY_COLOR
+          color: FONT_DARK_COLOR
         },
         '&.Mui-disabled': {
           color: DISABLED_COLOR
@@ -219,7 +232,7 @@ export const components: Components = {
       },
       colorSecondary: {
         '&.Mui-disabled.Mui-checked': {
-          color: PRIMARY_COLOR
+          color: FONT_DARK_COLOR
         },
         '&.Mui-disabled': {
           color: DISABLED_COLOR
@@ -231,12 +244,12 @@ export const components: Components = {
     styleOverrides: {
       root: {
         '&.Mui-disabled': {
-          color: PRIMARY_COLOR
+          color: FONT_DARK_COLOR
         }
       },
       colorSecondary: {
         '&.Mui-disabled': {
-          color: PRIMARY_COLOR
+          color: DISABLED_COLOR
         }
       }
     }
@@ -252,7 +265,7 @@ export const components: Components = {
     styleOverrides: {
       root: {
         '&.Mui-selected': {
-          color: SECONDARY_COLOR
+          color: FONT_DARK_COLOR
         },
         fontWeight: '600',
         fontSize: '1rem'

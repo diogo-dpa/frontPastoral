@@ -87,7 +87,7 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
                   fontSize: '18px'
                 },
                 '& .MuiSelect-select': {
-                  bgcolor: required ? '#ffef3975' : '',
+                  bgcolor: required ? 'info.contrastText' : '',
                   borderBottom: error ? '2px solid red' : ''
                 }
               }}
@@ -142,7 +142,7 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
             },
             '& input, & textarea': {
               fontSize: '18px',
-              bgcolor: required ? '#ffef3975' : '',
+              bgcolor: required ? 'info.contrastText' : '',
               pt: '16px'
             }
           }}

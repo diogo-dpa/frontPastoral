@@ -108,8 +108,8 @@ const SearchArea = ({
           <CommonButton
             text="Pesquisar"
             onClickAction={handleSearchPersonByField}
-            bgcolor="red"
-            bgcolorHover="blue"
+            bgcolor="secondary.main"
+            bgcolorHover="secondary.light"
             customCSS={{
               mt: 2
             }}

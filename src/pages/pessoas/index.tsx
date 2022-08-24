@@ -121,8 +121,8 @@ const UsersPage = () => {
           <Link href="/pessoas/cadastro">
             <CommonButton
               text="Cadastrar"
-              bgcolor="red"
-              bgcolorHover="blue"
+              bgcolor="secondary.main"
+              bgcolorHover="secondary.light"
               customCSS={{
                 mb: 2
               }}

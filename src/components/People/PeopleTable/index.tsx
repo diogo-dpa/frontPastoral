@@ -89,6 +89,7 @@ const EnhancedTableToolbar = ({
       <Typography
         sx={{ flex: '1 1 100%', textAlign: 'center' }}
         variant="h6"
+        fontSize={['16px', '18px']}
         id="tableTitle"
         component="div"
       >
@@ -160,7 +161,7 @@ export default function PeopleTable({
                   sx={{
                     fontSize: field.highlight ? '16px' : '14px',
                     fontWeight: field.highlight ? 'bold' : '',
-                    color: field.highlight ? 'green' : '',
+                    color: field.highlight ? 'primary.main' : '',
                     mb: [1, 0]
                   }}
                 >
@@ -286,7 +287,7 @@ export default function PeopleTable({
                             cursor: 'pointer',
                             transition: 'color 0.2s',
                             '&:hover': {
-                              color: 'red'
+                              color: 'secondary.dark'
                             }
                           }}
                         />
