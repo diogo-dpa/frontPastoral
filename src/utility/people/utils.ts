@@ -5,12 +5,12 @@ import {
   MAX_INPUT_INTERMEDIATE_DIGITS,
   RG_DOCUMENT_DIGITS_MAX,
   TELEPHONE_DIGITS
-} from '@utility/consts';
-import { InputFormType } from '@utility/interfaces';
+} from '../consts';
+import { InputFormType } from '../interfaces';
 import {
   convertStringBRLToDateFormat,
   removeSpecialCharacters
-} from '@utility/methods';
+} from '../methods';
 import {
   civilSituationOptions,
   genderCategoryOptions,
@@ -301,14 +301,14 @@ export const personInputsFields: InputFormType[] = [
 export function formatPersonData(personData: PersonData) {
   return {
     ...personData,
-    nome: personData.name.toUpperCase(),
+    name: personData.name.toUpperCase(),
     cpf: removeSpecialCharacters(personData.cpf),
     rg: removeSpecialCharacters(personData.rg),
     mothersName: personData.mothersName.toUpperCase(),
-    dataNascimento: convertStringBRLToDateFormat(personData.birthDate),
-    quantidadeFilhos: parseInt(personData.childrenQuantity, 10),
-    problemaDeSaude: personData.hasHealthProblem === 'sim' ? true : false,
-    situacaoDeRua: personData.isCareSituation === 'sim' ? true : false,
-    portadorDeficiencia: personData.isDisabledPerson === 'sim' ? true : false
+    birthDate: convertStringBRLToDateFormat(personData.birthDate),
+    childrenQuantity: parseInt(personData.childrenQuantity, 10),
+    hasHealthProblem: personData.hasHealthProblem === 'sim' ? true : false,
+    isCareSituation: personData.isCareSituation === 'sim' ? true : false,
+    isDisabledPerson: personData.isDisabledPerson === 'sim' ? true : false
   };
 }

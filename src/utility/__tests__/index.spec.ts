@@ -120,7 +120,7 @@ describe('Methods Tests', () => {
   });
 
   describe('formatDateToPTBRDayMonthYear', () => {
-    const passExample = new Date();
+    const passExample = new Date(2022, 7, 23);
     const rejectExamples = ['batata'];
     test('Pass', () => {
       expect(
