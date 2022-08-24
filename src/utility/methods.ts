@@ -11,7 +11,9 @@ export const getEnvironmentVariable = (name: string) => {
   }
 };
 
-export const validateDate = (dateValue: string | undefined) => {
+export const validateDateBetweenMinorMajorAges = (
+  dateValue: string | undefined
+) => {
   if (dateValue) {
     const splittedDate = dateValue.split('/');
     const year = Number(splittedDate[2]);
@@ -32,6 +34,29 @@ export const validateDate = (dateValue: string | undefined) => {
       month > 0 &&
       month <= 12 &&
       year >= todayDate.getFullYear() - MAJOR_AGE
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isValidDate = (dateValue: string | undefined) => {
+  if (dateValue) {
+    const splittedDate = dateValue.split('/');
+    const year = Number(splittedDate[2]);
+    const month = Number(splittedDate[1]);
+    const day = Number(splittedDate[0]);
+
+    if (
+      !isNaN(day) &&
+      !isNaN(month) &&
+      !isNaN(year) &&
+      day > 0 &&
+      day <= 31 &&
+      month > 0 &&
+      month <= 12 &&
+      year >= 1900
     ) {
       return true;
     }
@@ -77,6 +102,7 @@ export const validateCPF = (cpf: string) => {
 
 export const convertStringBRLToDateFormat = (dateBRLFormat: string) => {
   if (!dateBRLFormat) return null;
+  if (!isValidDate(dateBRLFormat)) return null;
   const splitedDate = dateBRLFormat.split('/');
   return new Date(
     Number(splitedDate[2]),
@@ -88,6 +114,7 @@ export const convertStringBRLToDateFormat = (dateBRLFormat: string) => {
 export const formatDateToPTBRDayMonthYear = (value: string | null) => {
   if (value === null) return null;
   const convertedDate = new Date(value);
+  if (isNaN(convertedDate.getTime())) return null;
   return new Intl.DateTimeFormat('pt-BR', {
     year: 'numeric',
     month: 'numeric',
@@ -98,6 +125,7 @@ export const formatDateToPTBRDayMonthYear = (value: string | null) => {
 export const formatDateToPTBR = (value: string | null) => {
   if (value === null) return null;
   const convertedDate = new Date(value);
+  if (isNaN(convertedDate.getTime())) return null;
   return new Intl.DateTimeFormat('pt-BR', {
     year: 'numeric',
     month: 'numeric',
@@ -108,7 +136,7 @@ export const formatDateToPTBR = (value: string | null) => {
 };
 
 export const removeSpecialCharacters = (value: string) => {
-  if (value === undefined) return '';
+  if (!value) return '';
   const er = /[^a-z0-9]/gi;
   return value.replace(er, '');
 };

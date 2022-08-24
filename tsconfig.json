@@ -24,7 +24,7 @@
       "@utility/*": ["./src/utility/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "babel.config.js"],
   "exclude": ["node_modules"],
   "types": ["@emotion/core"]
 }

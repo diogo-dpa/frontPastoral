@@ -5,7 +5,7 @@ import {
   CTPS_DOCUMENT_DIGITS,
   RG_DOCUMENT_DIGITS
 } from '../consts';
-import { validateCPF, validateDate } from '../methods';
+import { validateCPF, validateDateBetweenMinorMajorAges } from '../methods';
 
 export const newPersonFormSchema = yup
   .object({
@@ -22,7 +22,9 @@ export const newPersonFormSchema = yup
       .required('Campo obrigatório'),
     birthDate: yup
       .string()
-      .test('Regex', 'Data inválida', curr => validateDate(curr))
+      .test('Regex', 'Data inválida', curr =>
+        validateDateBetweenMinorMajorAges(curr)
+      )
       .min(BIRTH_DATE_DIGITS, 'Valor inválido')
       .required('Campo obrigatório'),
     mothersName: yup.string().required('Campo obrigatório'),
